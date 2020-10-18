@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QrCodeView extends StatefulWidget {
+  const QrCodeView();
+
   @override
   _QrCodeViewState createState() => _QrCodeViewState();
 }
 
 class _QrCodeViewState extends State<QrCodeView> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  var qrText = "";
   QRViewController controller;
 
   @override
@@ -19,7 +20,7 @@ class _QrCodeViewState extends State<QrCodeView> {
           color: Colors.black,
           // child: QRView(
           //   key: qrKey,
-          //   onQRViewCreated: _onQRViewCreated,
+          //   onQRViewCreated: onQRViewCreated,
           // ),
         ),
         Positioned(
@@ -27,7 +28,7 @@ class _QrCodeViewState extends State<QrCodeView> {
           left: MediaQuery.of(context).size.width / 4.3,
           child: Column(
             children: [
-              const MenuButton(),
+              const FlashLightIcon(),
               InkWell(
                 onTap: () {
                   controller.toggleFlash();
@@ -45,13 +46,9 @@ class _QrCodeViewState extends State<QrCodeView> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        qrText = scanData;
-      });
-    });
+    controller.scannedDataStream.listen((scanData) {});
   }
 
   @override
@@ -61,8 +58,8 @@ class _QrCodeViewState extends State<QrCodeView> {
   }
 }
 
-class MenuButton extends StatelessWidget {
-  const MenuButton();
+class FlashLightIcon extends StatelessWidget {
+  const FlashLightIcon();
   @override
   Widget build(BuildContext context) {
     return Icon(

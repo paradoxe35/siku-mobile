@@ -2,6 +2,10 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:siku/screens/home/bottom-sheet/sheet_counter_guests.dart';
+import 'package:siku/screens/home/bottom-sheet/sheet_guests_list.dart';
+import 'package:siku/screens/home/bottom-sheet/sheet_header.dart';
+import 'package:siku/utils/constants.dart';
 
 const double minHeight = 220;
 
@@ -24,9 +28,16 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
 
   double get headerFontSize => lerp(14, 24);
 
+  bool show;
+
+  double onEndAnimatedOpaticy(double lerp) {
+    return show ? lerp : 0;
+  }
+
   @override
   void initState() {
     super.initState();
+    show = widget.show;
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 600),
@@ -48,13 +59,20 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
       animation: _controller,
       builder: (context, child) {
         return Positioned(
-          height: lerp(minHeight, maxHeight),
+          height: onEndAnimatedOpaticy(
+            lerp(minHeight, maxHeight),
+          ),
           left: 0,
           right: 0,
           bottom: 0,
           child: AnimatedOpacity(
-            opacity: 1,
-            duration: const Duration(milliseconds: 100),
+            opacity: widget.show ? 1 : 0,
+            onEnd: () {
+              setState(() {
+                show = widget.show;
+              });
+            },
+            duration: const Duration(milliseconds: 200),
             child: GestureDetector(
               onVerticalDragUpdate: _handleDragUpdate,
               onVerticalDragEnd: _handleDragEnd,
@@ -70,9 +88,26 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
                       fontSize: headerFontSize,
                       topMargin: headerTopMargin,
                     ),
-                    Positioned(
-                      child: Text('data'),
-                    )
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: headerTopMargin + headerTopMargin),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SheetCounterGuests(),
+                          const SizedBox(height: 20),
+                          const Text(
+                            'Guests',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: kTextLightColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SheetGuestsList(),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -99,29 +134,5 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
       _controller.fling(velocity: math.min(-2.0, -flingVelocity));
     else
       _controller.fling(velocity: _controller.value < 0.5 ? -2.0 : 2.0);
-  }
-}
-
-class SheetHeader extends StatelessWidget {
-  final double fontSize;
-  final double topMargin;
-
-  const SheetHeader(
-      {Key key, @required this.fontSize, @required this.topMargin})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: topMargin,
-      child: Text(
-        'Booked Exhibition',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: fontSize,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
   }
 }

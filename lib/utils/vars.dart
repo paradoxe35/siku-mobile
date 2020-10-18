@@ -1,2 +1,4 @@
-const host = 'http://169.254.35.210:8000';
-const hostEcho = 'http://169.254.35.210:6001';
+const ip = 'http://localhost';
+const host = '$ip:8000';
+const hostEcho = '$ip:6001';
+const appName = 'SiKu';

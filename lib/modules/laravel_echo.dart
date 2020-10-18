@@ -8,6 +8,6 @@ Echo echo = new Echo({
   'host': hostEcho,
 });
 
-// echo.channel('App.Event.Validation.3').listen('.validated.guest', (e) {
-//     print(e);
-//   });
+void onValidatedGuest(int eventId, Function cb) {
+  echo.channel('App.Event.Validation.$eventId').listen('.validated.guest', cb);
+}

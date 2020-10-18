@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:siku/screens/home/constant.dart';
+import 'package:siku/utils/constants.dart';
 
 class Tabs extends StatelessWidget {
   final int index;
@@ -64,7 +66,7 @@ class MyTab extends StatelessWidget {
               text,
               style: TextStyle(
                 fontSize: isSelected ? 16 : 14,
-                color: Colors.grey,
+                color: kTextLightColor,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
               ),
             ),
@@ -74,7 +76,7 @@ class MyTab extends StatelessWidget {
             width: 20,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              color: isSelected ? Color(0xFF035AA6) : Colors.white,
+              color: isSelected ? tPrimaryColor : Colors.white,
             ),
           )
         ],
