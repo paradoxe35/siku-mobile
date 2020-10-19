@@ -30,6 +30,9 @@ Event _$EventFromJson(Map<String, dynamic> json) {
     json['name'] as String,
     (json['price'] as num)?.toDouble(),
     json['route'] as String,
+    json['admin'] == null
+        ? null
+        : Admin.fromJson(json['admin'] as Map<String, dynamic>),
   );
 }
 
@@ -44,4 +47,17 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'is_public': instance.isPublic,
       'event_date': instance.eventDate,
       'created_at': instance.createdAt,
+      'admin': instance.admin?.toJson(),
+    };
+
+Admin _$AdminFromJson(Map<String, dynamic> json) {
+  return Admin(
+    json['email'] as String,
+    json['phone'] as String,
+  );
+}
+
+Map<String, dynamic> _$AdminToJson(Admin instance) => <String, dynamic>{
+      'email': instance.email,
+      'phone': instance.phone,
     };

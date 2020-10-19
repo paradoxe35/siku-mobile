@@ -3,6 +3,7 @@ import 'package:siku/serializable/attends.dart';
 import 'package:siku/serializable/event.dart';
 import 'package:siku/serializable/logged.dart';
 import 'package:siku/serializable/user.dart';
+import 'package:siku/serializable/validation.dart';
 import 'package:siku/utils/vars.dart';
 import 'package:connectivity/connectivity.dart';
 
@@ -59,11 +60,11 @@ Future<Logged> loginUserToken(String username, String deviceName) async {
   });
 }
 
-Future desconnectUserToken(String username, String deviceName) async {
+Future desconnectUserToken() async {
   return await fetch(() async {
     try {
       Response res = await dio.post("/destroy-token");
-      return Logged.fromJson(res.data);
+      return res.data;
     } on DioError catch (e) {
       if (e.response != null) {
         throw e.response.data['message'];
@@ -109,6 +110,22 @@ Future<List<Attend>> fetchAttends(String eventHash) async {
     try {
       Response res = await dio.get("/$eventHash/attends");
       return (Attends.fromJson(res.data)).data;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw e.response.data['message'];
+      } else {
+        throw e.message;
+      }
+    }
+  });
+}
+
+Future<Validation> validateGuest(String eventHash, String code) async {
+  return await fetch(() async {
+    try {
+      Response res =
+          await dio.post("/$eventHash/validation", data: {'code': code});
+      return (Validation.fromJson(res.data));
     } on DioError catch (e) {
       if (e.response != null) {
         throw e.response.data['message'];

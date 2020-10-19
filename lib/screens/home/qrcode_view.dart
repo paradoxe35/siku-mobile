@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:siku/network/validation.dart';
 
 class QrCodeView extends StatefulWidget {
   const QrCodeView();
@@ -10,7 +11,7 @@ class QrCodeView extends StatefulWidget {
 
 class _QrCodeViewState extends State<QrCodeView> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController controller;
+  QRViewController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +19,10 @@ class _QrCodeViewState extends State<QrCodeView> {
       children: [
         Container(
           color: Colors.black,
-          // child: QRView(
-          //   key: qrKey,
-          //   onQRViewCreated: onQRViewCreated,
-          // ),
+          child: QRView(
+            key: qrKey,
+            onQRViewCreated: onQRViewCreated,
+          ),
         ),
         Positioned(
           top: MediaQuery.of(context).size.height / 3.7,
@@ -31,7 +32,7 @@ class _QrCodeViewState extends State<QrCodeView> {
               const FlashLightIcon(),
               InkWell(
                 onTap: () {
-                  controller.toggleFlash();
+                  _controller.toggleFlash();
                 },
                 child: Icon(
                   Icons.wb_sunny,
@@ -47,14 +48,23 @@ class _QrCodeViewState extends State<QrCodeView> {
   }
 
   void onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {});
+    _controller = controller;
+    _controller.scannedDataStream.listen((scanData) {
+      _validate(scanData);
+    });
   }
 
   @override
   void dispose() {
-    controller?.dispose();
+    _controller?.dispose();
     super.dispose();
+  }
+
+  void _validate(String code) {
+    _controller.pauseCamera();
+    validation(context, code, () {
+      _controller.resumeCamera();
+    });
   }
 }
 

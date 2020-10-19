@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'event.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Event {
   Event(
     this.id,
@@ -15,6 +15,7 @@ class Event {
     this.name,
     this.price,
     this.route,
+    this.admin,
   );
 
   @JsonKey(required: true)
@@ -47,7 +48,28 @@ class Event {
   @JsonKey(required: true, name: 'created_at')
   String createdAt;
 
+  @JsonKey(nullable: true)
+  Admin admin;
+
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
 
   Map<String, dynamic> toJson() => _$EventToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Admin {
+  Admin(
+    this.email,
+    this.phone,
+  );
+
+  @JsonKey(nullable: true)
+  String email;
+
+  @JsonKey(nullable: true)
+  String phone;
+
+  factory Admin.fromJson(Map<String, dynamic> json) => _$AdminFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AdminToJson(this);
 }
