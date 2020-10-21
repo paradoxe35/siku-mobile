@@ -1,4 +1,4 @@
-const ip = 'http://localhost';
-const host = '$ip:8000';
+const ip = 'https://siku-png.herokuapp.com';
+const host = '$ip';
 const hostEcho = '$ip:6001';
 const appName = 'SiKu';

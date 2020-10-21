@@ -134,10 +134,12 @@ class _LoginPageState extends State<LoginPage> {
   void _authenticated(Logged data) {
     _putInStoratage(data);
     _putInAppStore(data);
-
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => const HomePage()),
+      MaterialPageRoute(
+        builder: (context) => const HomePage(),
+      ),
+      (_) => false,
     );
   }
 
