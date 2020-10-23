@@ -43,16 +43,8 @@ class _ProfileViewState extends State<ProfileView> {
                     (event.admin != null ? event.admin.phone : ''),
               ),
               Title(
-                title: 'Name',
-                subtitle: user.name,
-              ),
-              Title(
-                title: 'Username',
-                subtitle: user.username,
-              ),
-              Title(
-                title: 'Phone',
-                subtitle: user.phone,
+                title: 'User Info',
+                subtitle: "${user.name}\n${user.username}\n${user.phone}",
               ),
               Center(
                 child: FlatButton(

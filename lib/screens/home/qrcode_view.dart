@@ -18,6 +18,8 @@ class _QrCodeViewState extends State<QrCodeView> {
     return Stack(
       children: [
         Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           color: Colors.black,
           child: QRView(
             key: qrKey,

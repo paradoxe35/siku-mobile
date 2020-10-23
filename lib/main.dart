@@ -6,6 +6,7 @@ import 'package:siku/blocs/user_block.dart';
 import 'package:siku/modules/modules.dart';
 import 'package:siku/screens/screens.dart';
 import 'package:siku/utils/vars.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(
@@ -23,6 +24,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
       title: appName,
       debugShowCheckedModeBanner: false,

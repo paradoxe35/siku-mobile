@@ -21,6 +21,15 @@ BaseOptions options = new BaseOptions(
 
 Dio dio = Dio(options);
 
+dynamic showMessageError(error) {
+  return error.response.data['message'];
+}
+
+dynamic showEntityLoginError(error, String key) {
+  final errors = error.response.data['errors'];
+  return errors[key][0];
+}
+
 class AppRequest {
   static setAuthorization(String token) {
     commonHeader['Authorization'] = 'Bearer $token';
@@ -51,8 +60,11 @@ Future<Logged> loginUserToken(String username, String deviceName) async {
       return Logged.fromJson(res.data);
     } on DioError catch (e) {
       if (e.response != null) {
-        final errors = e.response.data['errors'];
-        throw errors['username'][0];
+        if (e.response.statusCode == 422) {
+          throw showEntityLoginError(e, 'username');
+        } else {
+          throw showMessageError(e);
+        }
       } else {
         throw e.message;
       }
@@ -67,7 +79,7 @@ Future desconnectUserToken() async {
       return res.data;
     } on DioError catch (e) {
       if (e.response != null) {
-        throw e.response.data['message'];
+        throw showMessageError(e);
       } else {
         throw e.message;
       }
@@ -82,7 +94,7 @@ Future<Event> fetchWorkingEvent() async {
       return Event.fromJson(res.data);
     } on DioError catch (e) {
       if (e.response != null) {
-        throw e.response.data['message'];
+        throw showMessageError(e);
       } else {
         throw e.message;
       }
@@ -97,7 +109,7 @@ Future<User> fetchAuth() async {
       return (UserData.fromJson(res.data)).data;
     } on DioError catch (e) {
       if (e.response != null) {
-        throw e.response.data['message'];
+        throw showMessageError(e);
       } else {
         throw e.message;
       }
@@ -112,7 +124,7 @@ Future<List<Attend>> fetchAttends(String eventHash) async {
       return (Attends.fromJson(res.data)).data;
     } on DioError catch (e) {
       if (e.response != null) {
-        throw e.response.data['message'];
+        throw showMessageError(e);
       } else {
         throw e.message;
       }
@@ -128,7 +140,11 @@ Future<Validation> validateGuest(String eventHash, String code) async {
       return (Validation.fromJson(res.data));
     } on DioError catch (e) {
       if (e.response != null) {
-        throw e.response.data['message'];
+        if (e.response.statusCode == 422) {
+          throw showEntityLoginError(e, 'code');
+        } else {
+          throw showMessageError(e);
+        }
       } else {
         throw e.message;
       }

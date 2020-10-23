@@ -38,79 +38,81 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         key: _scaffoldKey,
         // resizeToAvoidBottomPadding: false,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 100.0, 0.0, 0.0),
-                    child: Text(
-                      appName,
-                      style: TextStyle(
-                        color: Color(0xFF32325D),
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(16.0, 100.0, 0.0, 0.0),
+                      child: Text(
+                        appName,
+                        style: TextStyle(
+                          color: Color(0xFF32325D),
+                          fontSize: 80.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
-                    child: Text(
-                      '.',
-                      style: TextStyle(
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        color: kPrimaryColor,
+                    Container(
+                      padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+                      child: Text(
+                        '.',
+                        style: TextStyle(
+                          fontSize: 80.0,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor,
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              padding: fieldPadding,
-              child: Column(
-                children: <Widget>[
-                  TextField(
-                    onChanged: (String v) {
-                      setState(() {
-                        _username = v;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                      labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: kPrimaryTextColor),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 40.0),
-                  ButtonPrimary(
-                    label: 'Open a session',
-                    onTap: _username.trim().isEmpty ? null : _onSubmit,
-                  ),
-                  SizedBox(height: 20.0),
-                ],
-              ),
-            ),
-            Container(
-              padding: textPadding,
-              child: Text(
-                desciption,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: kTextMutedColor,
-                  fontWeight: FontWeight.bold,
+                    )
+                  ],
                 ),
               ),
-            ),
-          ],
+              Container(
+                padding: fieldPadding,
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      onChanged: (String v) {
+                        setState(() {
+                          _username = v;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Username',
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: kPrimaryTextColor),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 40.0),
+                    ButtonPrimary(
+                      label: 'Open a session',
+                      onTap: _username.trim().isEmpty ? null : _onSubmit,
+                    ),
+                    SizedBox(height: 20.0),
+                  ],
+                ),
+              ),
+              Container(
+                padding: textPadding,
+                child: Text(
+                  desciption,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: kTextMutedColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

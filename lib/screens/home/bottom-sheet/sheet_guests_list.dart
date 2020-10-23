@@ -19,7 +19,7 @@ class _SheetGuestsListState extends State<SheetGuestsList> {
   void _fromSocket() {
     onValidatedGuest(EventStorage.event.id, (data) {
       final attend = a.Attend.fromJson(data);
-      context.read<Attends>().preprendAttends(attend);
+      Future.microtask(() => context.read<Attends>().preprendAttends(attend));
     });
   }
 

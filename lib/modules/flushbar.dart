@@ -22,7 +22,7 @@ class FlushbarApp {
       icon: Icon(
         Icons.check,
         size: 28.0,
-        color: Colors.blue[300],
+        color: Colors.green[300],
       ),
       message: message,
       duration: const Duration(seconds: 3),

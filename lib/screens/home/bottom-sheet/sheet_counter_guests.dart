@@ -10,7 +10,7 @@ class SheetCounterGuests extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(top: size.height * 0.02),
+      margin: EdgeInsets.only(top: size.height * 0.001),
       child: Column(
         children: [
           Center(
@@ -33,7 +33,7 @@ class SheetCounterGuests extends StatelessWidget {
           SizedBox(height: 10),
           Center(
             child: Text(
-              'Validés',
+              'Validated',
               style: TextStyle(
                 fontSize: 12,
                 color: kTextMutedColor,

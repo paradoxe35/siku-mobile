@@ -7,7 +7,7 @@ import 'package:siku/screens/home/bottom-sheet/sheet_guests_list.dart';
 import 'package:siku/screens/home/bottom-sheet/sheet_header.dart';
 import 'package:siku/utils/constants.dart';
 
-const double minHeight = 220;
+const double minHeight = 200;
 
 class ExhibitionBottomSheet extends StatefulWidget {
   final bool show;
