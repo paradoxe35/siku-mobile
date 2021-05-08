@@ -76,7 +76,8 @@ class _HomePageState extends State<HomePage> {
       child: ChangeNotifierProvider(
         create: (_) => Attends(),
         child: Scaffold(
-          resizeToAvoidBottomPadding: false,
+          // resizeToAvoidBottomPadding: false,
+          resizeToAvoidBottomInset: false,
           body: Builder(
             builder: (context) {
               if (!fetchedAttends) {
